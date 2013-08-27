@@ -1,0 +1,11 @@
+build
+image.svg
+image.png
+include
+lib
+pebble_app.ld
+tools
+waf
+wscript
+.lock-waf_linux2_build
+.waf-*
