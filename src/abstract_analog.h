@@ -1,6 +1,6 @@
 #pragma once
 
-#include "pebble_os.h"
+#include "pebble.h"
 
 #define SIZE 5
 #define HR_LEN 27
@@ -15,10 +15,8 @@ static const GPathInfo HOUR_HAND_POINTS = {
   }
 };
 
-static const GPathInfo MINUTE_HAND_POINTS =
-{
-  4,
-  (GPoint []) {
+static const GPathInfo MINUTE_HAND_POINTS = {
+  4, (GPoint []) {
     { -SIZE, 0 },
     { 0, SIZE },
     { SIZE, 0 },

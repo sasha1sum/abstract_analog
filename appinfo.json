@@ -1,0 +1,15 @@
+{
+  "uuid": "f6b7f6c6-fdca-4c7e-8149-b690ee3cf7af",
+  "shortName": "abstract_analog",
+  "longName": "Abstract Analog 2",
+  "companyName": "Alec Goebel",
+  "versionCode": 1,
+  "versionLabel": "1.0.0",
+  "watchapp": {
+    "watchface": true
+  },
+  "appKeys": {}, 
+  "resources": {
+    "media": []
+  }
+}

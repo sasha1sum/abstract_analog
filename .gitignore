@@ -9,3 +9,4 @@ waf
 wscript
 .lock-waf_linux2_build
 .waf-*
+.*.sw*
