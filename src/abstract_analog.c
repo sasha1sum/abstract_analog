@@ -26,20 +26,23 @@ static void hands_update_proc(Layer *layer, GContext *ctx) {
 
   time_t now = time(NULL);
   struct tm *t = localtime(&now);
+  GPoint hourPt;
 
-  int32_t hourAngle = TRIG_MAX_ANGLE * (((t->tm_hour % 12) * 6) + (t->tm_min / 10)) / (12 * 6);
-  int16_t hourX = center.x + (int)(HR_LEN * sin_lookup(hourAngle) / TRIG_MAX_RATIO);
-  int16_t hourY = center.y - (int)(HR_LEN * cos_lookup(hourAngle) / TRIG_MAX_RATIO);
+  int32_t hourAngle = TRIG_MAX_ANGLE * (((t->tm_hour % 12) * 60) + t->tm_min) / (12 * 60);
+
+  hourPt.x = center.x + (int)(HR_LEN * sin_lookup(hourAngle) / TRIG_MAX_RATIO);
+  hourPt.y = center.y - (int)(HR_LEN * cos_lookup(hourAngle) / TRIG_MAX_RATIO);
 
   // minute/hour hand
   graphics_context_set_fill_color(ctx, GColorWhite);
   graphics_context_set_stroke_color(ctx, GColorBlack);
 
+  gpath_move_to(hour_arrow, center);
   gpath_rotate_to(hour_arrow, hourAngle);
   gpath_draw_filled(ctx, hour_arrow);
 
-  gpath_move_to(minute_arrow, GPoint(hourX, hourY));
-  gpath_rotate_to(minute_arrow, TRIG_MAX_ANGLE * t->tm_min / 60);
+  gpath_move_to(minute_arrow, hourPt);
+  gpath_rotate_to(minute_arrow, (int32_t)(TRIG_MAX_ANGLE * t->tm_min / 60));
   gpath_draw_filled(ctx, minute_arrow);
   gpath_draw_outline(ctx, minute_arrow);
 }
@@ -108,10 +111,10 @@ static void init(void) {
   gpath_move_to(hour_arrow, center);
 
   // Push the window onto the stack
-  const bool animated = true;
+  const bool animated = false;
   window_stack_push(window, animated);
 
-  tick_timer_service_subscribe(MINUTE_UNIT, handle_minute_tick);
+  tick_timer_service_subscribe(SECOND_UNIT, handle_minute_tick);
 }
 
 static void deinit(void) {
